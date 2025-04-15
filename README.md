@@ -1,2 +1,2 @@
 # seslenis
-It offers randomly selected Quranic surahs with translations — helping you reconnect, reflect, and find peace.
+It offers randomly selected Quranic suras with translations to help you reconnect, reflect and find peace.
