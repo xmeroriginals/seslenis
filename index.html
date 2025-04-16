@@ -1,38 +1,36 @@
 <!DOCTYPE html>
-<html lang="en" class="">
+<html lang="tr">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Yeniden bağlanmanıza, düşünmenize ve huzur bulmanıza yardımcı olmak için rastgele seçilmiş Kur'an surelerini çevirileriyle birlikte sunar."
+      content="Rastgele seçilen Kur'an sureleri ile yeniden bağlantı kurmanıza, düşünmenize ve huzur bulmanıza yardımcı olur."
     />
     <meta
       name="keywords"
-      content="Kuran, Quran, Sesli Kuran, Ayet, Dinle, Turkish, English, Islam, İslam"
+      content="Kuran, Quran, Sesli Kuran, Ayet, Dinle, Turkish, Islam, İslam"
     />
     <meta name="author" content="Sesleniş" />
-    <meta property="og:title" content="Sesleniş - Quran Player" />
+    <meta property="og:title" content="Sesleniş - Kuran Oynatıcı" />
     <meta
       property="og:description"
-      content="Dinle, öğren, hisset. Ayetleri Arapça ve Türkçe olarak sırayla dinleyin."
+      content="Dinle, öğren, hisset. Ayetleri Arapça ve Türkçe olarak sıralı dinle."
     />
     <meta
       property="og:image"
-      content="https://xmeroriginals.github.io/seslenis/assets/SeslenisLogo.png"
+      content="https://xmeroriginals.github.io/seslenis/assets/SeslenisSquareLogo.png"
     />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Sesleniş - Quran Player" />
+    <meta name="twitter:title" content="Sesleniş - Kuran Oynatıcı" />
     <meta
       name="twitter:description"
-      content="Yeniden bağlanmanıza, düşünmenize ve huzur bulmanıza yardımcı olmak için rastgele seçilmiş Kur'an surelerini çevirileriyle birlikte sunar."
+      content="Rastgele seçilen Kur'an sureleri ile yeniden bağlantı kurmanıza, düşünmenize ve huzur bulmanıza yardımcı olur."
     />
     <meta
       name="twitter:image"
-      content="https://xmeroriginals.github.io/seslenis/assets/SeslenisLogo.png"
+      content="https://xmeroriginals.github.io/seslenis/assets/SeslenisSquareLogo.png"
     />
     <link
       rel="icon"
@@ -41,7 +39,7 @@
     />
     <link
       rel="apple-touch-icon"
-      href="https://xmeroriginals.github.io/seslenis/assets/SeslenisLogo.png"
+      href="https://xmeroriginals.github.io/seslenis/assets/SeslenisSquareLogo.png"
     />
     <title>Sesleniş</title>
     <style>
@@ -101,6 +99,7 @@
         font-weight: bold;
         display: flex;
         align-items: center;
+        justify-content: center;
         gap: 0.5rem;
         transition: 0.3s;
       }
@@ -137,43 +136,36 @@
         color: white;
         border-color: #6b7280;
       }
-      #modal {
+      .modal-wrapper {
         display: none;
         position: fixed;
         inset: 0;
         background: rgba(27, 27, 27, 0.5);
         justify-content: center;
         align-items: center;
+        z-index: 20;
       }
-      #modal .box {
-        background: white;
-        padding: 2rem;
-        border-radius: 1rem;
-        max-width: 400px;
-        width: 100%;
-      }
-      body.dark #modal .box {
-        background: #374151;
-        color: white;
-      }
-      #surahCompletedModal {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: rgba(27, 27, 27, 0.5);
+      .modal-wrapper.active {
+        display: flex !important;
+        text-align: center;
         justify-content: center;
         align-items: center;
       }
-      #surahCompletedModal .box {
+      .modal-wrapper .box {
         background: white;
         padding: 2rem;
         border-radius: 1rem;
         max-width: 400px;
         width: 100%;
       }
-      body.dark #surahCompletedModal .box {
+      body.dark .modal-wrapper .box {
         background: #374151;
         color: white;
+      }
+      .dropdown {
+        padding: 0.5rem;
+        font-size: 1rem;
+        width: 100%;
       }
       .flex {
         display: flex;
@@ -211,6 +203,155 @@
         gap: 0.75rem;
         flex-wrap: wrap;
       }
+
+      #mobileMenu {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 70%;
+        height: 100%;
+        background: rgb(250, 213, 140, 0.5);
+        backdrop-filter: blur(3px);
+        color: inherit;
+        padding: 1rem;
+        z-index: 11;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+        transition: left 0.3s ease-in-out;
+        overflow-y: auto;
+      }
+
+      body.dark #mobileMenu {
+        background: rgba(31, 41, 55, 0.8);
+      }
+
+      #mobileMenu.active {
+        left: 0;
+      }
+
+      #mobileMenu header {
+        width: 100%;
+        padding: 1rem 0;
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 1rem;
+      }
+
+      #mobileMenu button,
+      #mobileMenu select {
+        width: 100%;
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+        text-align: center;
+        transition: background 0.3s ease;
+        margin-bottom: 10px;
+      }
+
+      #mobileMenu button {
+        background: #e5e7eb;
+        color: inherit;
+      }
+
+      #mobileMenu button:hover {
+        background: #d1d5db;
+      }
+
+      body.dark #mobileMenu button {
+        background: #4b5563;
+        color: white;
+      }
+
+      body.dark #mobileMenu button:hover {
+        background: #6b7280;
+      }
+
+      #mobileMenu #openSurahSelectModalBtnMobile,
+      #mobileMenu #newSurahBtnMobile {
+        background: #059669;
+        color: white;
+      }
+
+      #mobileMenu #openSurahSelectModalBtnMobile:hover,
+      #mobileMenu #newSurahBtnMobile:hover {
+        background: #047857;
+      }
+
+      #menuToggle {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+      }
+
+      #menuToggle img {
+        width: 30px;
+        height: 30px;
+        filter: invert(0);
+        transition: filter 0.3s ease;
+      }
+
+      body.dark #menuToggle img {
+        filter: invert(1);
+      }
+
+      #menuOverlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 10;
+      }
+
+      #menuOverlay.active {
+        display: block;
+      }
+
+      @media (max-width: 768px) {
+        .left-nav {
+          display: none;
+        }
+
+        #menuToggle {
+          display: block;
+        }
+      }
+
+      .container {
+        padding-top: calc(6rem + 56px);
+      }
+
+      #surahSelect {
+        max-height: 200px;
+        overflow-y: scroll;
+        text-align: center;
+        z-index: 21;
+      }
+
+      #mobileMenu header img {
+        width: 30px;
+        height: 30px;
+        filter: invert(0);
+        transition: filter 0.3s ease;
+      }
+
+      body.dark #mobileMenu header img {
+        filter: invert(1);
+      }
+
+      #selectSurahBtn {
+        display: block; /* Make it a block element */
+        margin: 0 auto; /* Center horizontally */
+        text-align: center; /* Center text inside the button */
+      }
     </style>
   </head>
   <body>
@@ -221,42 +362,80 @@
             src="https://xmeroriginals.github.io/seslenis/assets/Dark.svg"
             id="themeIcon"
             class="icon"
-            alt="Theme"
+            alt="Tema"
           />
         </button>
-        <button class="btngreen" id="newSurahBtn">Yeni Sûre</button>
+        <button class="btn" id="languageToggle" style="display:none">TR</button>
+        <button class="btngreen" id="openSurahSelectModalBtn">Sûre Seç</button>
+        <button class="btngreen" id="newSurahBtn">Rastgele Sûre</button>
         <button class="btn" id="startOverBtn">Baştan Başla</button>
-        <img
-          src="https://xmeroriginals.github.io/seslenis/assets/Speaker.svg"
-          class="speakericon"
-          alt="TTS"
-        />
-        <label><input type="checkbox" id="ttsToggle" /></label>
-        <select id="voiceSelect"></select>
       </div>
+
+      <button class="btn" id="menuToggle">
+        <img src="https://www.svgrepo.com/show/532195/menu.svg" alt="Menu" />
+      </button>
     </nav>
+    <div id="menuOverlay"></div>
+
+    <div id="mobileMenu">
+      <header>
+        <img src="https://www.svgrepo.com/show/532195/menu.svg" alt="Menu" />
+      </header>
+      <button class="btn" id="themeToggleMobile">
+        <img
+          src="https://xmeroriginals.github.io/seslenis/assets/Dark.svg"
+          id="themeIconMobile"
+          class="icon"
+          alt="Tema"
+        />
+      </button>
+      <button class="btn" id="languageToggleMobile" style="display:none">TR</button>
+      <button
+        class="btngreen"
+        id="openSurahSelectModalBtnMobile"
+        onclick="showSelectSurahModal()"
+      >
+        Sûre Seç
+      </button>
+      <button
+        class="btngreen"
+        id="newSurahBtnMobile"
+        onclick="startNewSurah()"
+      >
+        Rastgele Sûre
+      </button>
+      <button
+        class="btn"
+        id="startOverBtnMobile"
+        onclick="startSurahOver()"
+      >
+        Baştan Başla
+      </button>
+    </div>
 
     <div class="container">
       <div class="card">
-        <h1 id="ayahInfo">Sûre ? · ?&nbsp;&nbsp;✦&nbsp;&nbsp;Ayet ?·?</h1>
+        <h1 id="ayahInfo">Sûre ? · ?  ✦  Ayet ?·?</h1>
         <p class="text-right" id="arabicText"></p>
         <p id="turkishText"></p>
       </div>
     </div>
 
-    <div id="modal" class="flex">
+    <div id="continueModal" class="modal-wrapper">
       <div class="box">
-        <h2>Kaldığınız yerden devam etmek ister misiniz?</h2>
+        <h2 id="continueModalTitle">
+          Kaldığınız yerden devam etmek ister misiniz?
+        </h2>
         <div class="flex" style="margin-top: 1rem">
           <button class="btngreen" id="continueBtn">Evet, Devam et</button>
-          <button class="btn" id="startNewBtn">Baştan Başla</button>
+          <button class="btn" id="startNewBtn">Rastgele Sûre</button>
         </div>
       </div>
     </div>
 
-    <div id="surahCompletedModal" class="flex">
+    <div id="surahCompletedModal" class="modal-wrapper">
       <div class="box">
-        <h2>Sûre bitti, Ne yapmak istersiniz?</h2>
+        <h2 id="surahCompletedModalTitle">Sûre bitti, Ne yapmak istersiniz?</h2>
         <div class="flex" style="margin-top: 1rem">
           <button class="btngreen" id="newSurahModalBtn">Yeni Sûre</button>
           <button class="btn" id="restartSurahBtn">Baştan Başla</button>
@@ -264,20 +443,61 @@
       </div>
     </div>
 
+    <div id="selectSurahModal" class="modal-wrapper">
+      <div class="box">
+        <h2 id="selectSurahModalTitle">Sûre Seç</h2>
+        <select id="surahSelect" class="dropdown">
+          <option disabled selected id="selectSurahOption">Sûre Seçiniz</option>
+        </select>
+        <br /><br />
+        <button id="selectSurahBtn" class="btngreen">Seç</button>
+      </div>
+    </div>
+
     <script>
       let ayahNames = [];
+      let state = {
+        language: "TR",
+        ttsEnabled: false,
+        voiceURI: "",
+        surah: null,
+        ayah: null,
+      };
+
       const ayahInfo = document.getElementById("ayahInfo");
       const arabicText = document.getElementById("arabicText");
       const turkishText = document.getElementById("turkishText");
-      const modal = document.getElementById("modal");
+      const continueModal = document.getElementById("continueModal");
       const continueBtn = document.getElementById("continueBtn");
       const startNewBtn = document.getElementById("startNewBtn");
       const newSurahBtn = document.getElementById("newSurahBtn");
       const startOverBtn = document.getElementById("startOverBtn");
-      const ttsToggle = document.getElementById("ttsToggle");
       const themeToggle = document.getElementById("themeToggle");
       const themeIcon = document.getElementById("themeIcon");
-      const voiceSelect = document.getElementById("voiceSelect");
+      const surahSelect = document.getElementById("surahSelect");
+      const selectSurahBtn = document.getElementById("selectSurahBtn");
+      const selectSurahModal = document.getElementById("selectSurahModal");
+      const openSurahSelectModalBtn = document.getElementById(
+        "openSurahSelectModalBtn"
+      );
+      const surahCompletedModal = document.getElementById(
+        "surahCompletedModal"
+      );
+
+      const continueModalTitle = document.getElementById("continueModalTitle");
+      const surahCompletedModalTitle = document.getElementById(
+        "surahCompletedModalTitle"
+      );
+      const selectSurahModalTitle = document.getElementById(
+        "selectSurahModalTitle"
+      );
+      const selectSurahOption = document.getElementById("selectSurahOption");
+
+      const langMap = {
+        TR: "tr.diyanet",
+        EN: "tr.diyanet", //Fallback to turkish as english is removed
+      };
+
       let currentAudio = null;
 
       const loadAyahNames = async () => {
@@ -287,6 +507,13 @@
           );
           if (!res.ok) throw new Error("Ayet listesi alınamadı");
           ayahNames = await res.json();
+
+          ayahNames.forEach((name, index) => {
+            const option = document.createElement("option");
+            option.value = index + 1;
+            option.textContent = `${index + 1}. ${name}`;
+            surahSelect.appendChild(option);
+          });
         } catch (err) {
           console.error("Ayet isimleri yüklenirken hata oluştu:", err);
         }
@@ -294,15 +521,8 @@
 
       window.addEventListener("DOMContentLoaded", () => {
         loadAyahNames();
+        applyLocalization();
       });
-
-      let state = {
-        surah: 1,
-        ayah: 1,
-        totalAyah: 1,
-        ttsEnabled: false,
-        voiceURI: "",
-      };
 
       const saveState = () => {
         localStorage.setItem("quranPlayerState", JSON.stringify(state));
@@ -310,22 +530,29 @@
         localStorage.setItem("voiceURI", state.voiceURI);
       };
 
-      const populateVoices = () => {
-        const voices = speechSynthesis.getVoices();
-        voiceSelect.innerHTML = "";
-        voices.forEach((voice) => {
-          const option = document.createElement("option");
-          option.value = voice.voiceURI;
-          option.text = `${voice.name} (${voice.lang})`;
-          if (voice.voiceURI === state.voiceURI) {
-            option.selected = true;
-          }
-          voiceSelect.appendChild(option);
-        });
-      };
+      function toggleLanguage() {
+        state.language = "TR"; //Prevent from changing from TR
+        saveLanguage(); // Save language immediately
+        applyLocalization();
+        playAyah();
+      }
+
+      function saveLanguage() {
+        localStorage.setItem("language", state.language);
+      }
+
+      function loadLanguage() {
+        state.language = "TR"; //Force default turkish
+        localStorage.setItem("language", state.language);
+      }
 
       const playAyah = async () => {
         try {
+          if (!state.surah || !state.ayah) {
+            startNew();
+            return;
+          }
+
           if (currentAudio) {
             currentAudio.pause();
             currentAudio.currentTime = 0;
@@ -334,20 +561,35 @@
           const arabicRes = await fetch(
             `https://api.alquran.cloud/v1/ayah/${state.surah}:${state.ayah}/ar.alafasy`
           );
+          if (!arabicRes.ok) {
+            // If API returns error, fallback to 1:1
+            state.surah = 1;
+            state.ayah = 1;
+            return playAyah(); // Recall playAyah to load 1:1
+          }
           const arabic = await arabicRes.json();
 
           state.totalAyah = arabic.data.surah.numberOfAyahs || 0;
           arabicText.textContent = arabic.data.text;
           currentAudio = new Audio(arabic.data.audio);
 
+          const translationLang = langMap[state.language];
           const turkishRes = await fetch(
-            `https://api.alquran.cloud/v1/ayah/${state.surah}:${state.ayah}/tr.diyanet`
+            `https://api.alquran.cloud/v1/ayah/${state.surah}:${state.ayah}/${translationLang}`
           );
+          if (!turkishRes.ok) {
+            // If API returns error, fallback to 1:1
+            state.surah = 1;
+            state.ayah = 1;
+            return playAyah(); // Recall playAyah to load 1:1
+          }
           const turkish = await turkishRes.json();
 
           turkishText.textContent = turkish.data.text;
-          const ayahName = ayahNames[state.surah - 1] || `Surah ${state.surah}`;
-          ayahInfo.innerHTML = `Sûre ${state.surah} · ${ayahName}&nbsp;&nbsp;✦&nbsp;&nbsp;Ayet ${state.ayah}·${arabic.data.surah.numberOfAyahs}`;
+          const ayahName = ayahNames[state.surah - 1] || `Sûre ${state.surah}`;
+
+          const ayahInfoText = `Sûre ${state.surah} · ${ayahName}  ✦  Ayet ${state.ayah}/${arabic.data.surah.numberOfAyahs}`;
+          ayahInfo.innerHTML = ayahInfoText;
 
           saveState();
 
@@ -372,14 +614,17 @@
                 playAyah();
               }
             } else {
-              document.getElementById("surahCompletedModal").style.display =
-                "flex";
+              showModal("surahCompletedModal");
             }
           };
 
           currentAudio.play();
         } catch (e) {
-          alert("Error occurred. Please try again.");
+          console.error(e);
+          // Removed alert; now it defaults to 1:1 silently.
+          state.surah = 1;
+          state.ayah = 1;
+          playAyah(); // Recall playAyah to load 1:1
         }
       };
 
@@ -430,49 +675,163 @@
         playAyah();
       };
       startNewBtn.onclick = () => {
-        modal.style.display = "none";
+        hideModal("continueModal");
         startNew();
       };
       continueBtn.onclick = () => {
-        modal.style.display = "none";
+        hideModal("continueModal");
         continueSaved();
       };
-      voiceSelect.onchange = (e) => {
-        state.voiceURI = e.target.value;
-        saveState();
+
+      openSurahSelectModalBtn.onclick = () => {
+        showModal("selectSurahModal");
+      };
+
+      selectSurahBtn.onclick = () => {
+        const selectedSurah = parseInt(surahSelect.value);
+        if (!isNaN(selectedSurah)) {
+          state.surah = selectedSurah;
+          state.ayah = 1;
+          hideModal("selectSurahModal");
+          playAyah();
+        } else {
+          alert("Sûre seçiniz.");
+        }
       };
 
       document.getElementById("newSurahModalBtn").onclick = () => {
-        document.getElementById("surahCompletedModal").style.display = "none";
+        hideModal("surahCompletedModal");
         startNew();
       };
       document.getElementById("restartSurahBtn").onclick = () => {
-        document.getElementById("surahCompletedModal").style.display = "none";
+        hideModal("surahCompletedModal");
         restartCurrentSurah();
       };
-      startNewBtn.onclick = () => {
-        modal.style.display = "none";
-        restartCurrentSurah();
+
+      let activeModal = null;
+
+      const showModal = (modalId) => {
+        if (activeModal) {
+          hideModal(activeModal); // Hide previously active modal
+        }
+        document.getElementById(modalId).classList.add("active");
+        activeModal = modalId;
+      };
+
+      const hideModal = (modalId) => {
+        document.getElementById(modalId).classList.remove("active");
+        if (activeModal === modalId) {
+          activeModal = null;
+        }
+      };
+
+      const applyLocalization = () => {
+        document.getElementById("openSurahSelectModalBtn").textContent =
+          "Sûre Seç";
+        document.getElementById("newSurahBtn").textContent = "Rastgele Sûre";
+        document.getElementById("startOverBtn").textContent = "Baştan Başla";
+
+        continueModalTitle.textContent =
+          "Kaldığınız yerden devam etmek ister misiniz?";
+        continueBtn.textContent = "Evet, Devam et";
+        startNewBtn.textContent = "Rastgele Sûre";
+
+        surahCompletedModalTitle.textContent =
+          "Sûre bitti, Ne yapmak istersiniz?";
+        document.getElementById("newSurahModalBtn").textContent = "Yeni Sûre";
+        document.getElementById("restartSurahBtn").textContent =
+          "Baştan Başla";
+
+        selectSurahModalTitle.textContent = "Sûre Seç";
+        selectSurahOption.textContent = "Sûre Seçiniz";
+        selectSurahBtn.textContent = "Seç";
+
+        document.getElementById("languageToggle").style.display = "none";
+
+        document.getElementById("languageToggleMobile").style.display = "none";
+        document.getElementById("openSurahSelectModalBtnMobile").textContent =
+          "Sûre Seç";
+        document.getElementById("newSurahBtnMobile").textContent =
+          "Rastgele Sûre";
+        document.getElementById("startOverBtnMobile").textContent =
+          "Baştan Başla";
       };
 
       window.onload = () => {
         applyTheme();
         state.ttsEnabled = localStorage.getItem("ttsEnabled") === "true";
         state.voiceURI = localStorage.getItem("voiceURI") || "";
-        ttsToggle.checked = state.ttsEnabled;
-        ttsToggle.onchange = (e) => {
-          state.ttsEnabled = e.target.checked;
-          saveState();
-        };
-        populateVoices();
-        if (localStorage.getItem("quranPlayerState")) {
-          modal.style.display = "flex";
+        const savedState = localStorage.getItem("quranPlayerState");
+
+        loadLanguage(); // Load the language setting
+
+        if (savedState) {
+          state = JSON.parse(savedState);
+          showModal("continueModal");
         } else {
           startNew();
         }
+        applyLocalization();
       };
 
-      speechSynthesis.onvoiceschanged = populateVoices;
+      const languageToggle = document.getElementById("languageToggle");
+      languageToggle.addEventListener("click", toggleLanguage);
+
+      const menuToggle = document.getElementById("menuToggle");
+      const mobileMenu = document.getElementById("mobileMenu");
+      const menuOverlay = document.getElementById("menuOverlay");
+
+      function openMobileMenu() {
+        mobileMenu.classList.add("active");
+        menuOverlay.classList.add("active");
+      }
+
+      function closeMobileMenu() {
+        mobileMenu.classList.remove("active");
+        menuOverlay.classList.remove("active");
+      }
+
+      menuToggle.addEventListener("click", () => {
+        openMobileMenu();
+      });
+
+      menuOverlay.addEventListener("click", () => {
+        closeMobileMenu();
+      });
+
+      // Mobile Menu Functions
+      function showSelectSurahModal() {
+        showModal("selectSurahModal");
+        closeMobileMenu();
+      }
+
+      function startNewSurah() {
+        startNew();
+        closeMobileMenu();
+      }
+
+      function startSurahOver() {
+        state.ayah = 1;
+        playAyah();
+        closeMobileMenu();
+      }
+
+      const languageToggleMobile = document.getElementById(
+        "languageToggleMobile"
+      );
+      const themeToggleMobile = document.getElementById("themeToggleMobile");
+
+      languageToggleMobile.addEventListener("click", () => {
+        toggleLanguage();
+        closeMobileMenu();
+      });
+
+      themeToggleMobile.addEventListener("click", () => {
+        const current = document.body.className === "dark";
+        localStorage.setItem("darkMode", !current);
+        applyTheme();
+        closeMobileMenu();
+      });
     </script>
   </body>
 </html>
