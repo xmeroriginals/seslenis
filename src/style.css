@@ -56,6 +56,7 @@ body.dark .card {
   align-items: center;
   gap: 0.5rem;
   transition: 0.3s;
+  justify-content: center;
 }
 .btn {
   background: #e5e7eb;
@@ -90,60 +91,34 @@ body.dark select {
   color: white;
   border-color: #6b7280;
 }
-.modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(27, 27, 27, 0.5);
-  justify-content: center;
-  align-items: center;
-}
-#modal .box {
-  background: white;
-  padding: 2rem;
-  border-radius: 1rem;
-  max-width: 400px;
-  width: 100%;
-}
-body.dark #modal .box {
-  background: #374151;
-  color: white;
-}
-#surahCompletedModal {
+.modal-wrapper {
   display: none;
   position: fixed;
   inset: 0;
   background: rgba(27, 27, 27, 0.5);
   justify-content: center;
   align-items: center;
+  z-index: 20;
 }
-#surahCompletedModal .box {
+
+.modal-wrapper.active {
+  display: flex;
+}
+
+.modal-wrapper .box {
   background: white;
   padding: 2rem;
   border-radius: 1rem;
   max-width: 400px;
   width: 100%;
-}
-body.dark #surahCompletedModal .box {
-  background: #374151;
-  color: white;
-}
-.modal-content {
-  background: white;
-  padding: 2rem;
-  border-radius: 12px;
-  max-width: 400px;
   text-align: center;
 }
-.dropdown {
-  padding: 0.5rem;
-  font-size: 1rem;
-  width: 100%;
+
+body.dark .modal-wrapper .box {
+  background: #374151;
+  color: white;
 }
+
 .flex {
   display: flex;
   gap: 0.75rem;
@@ -180,35 +155,146 @@ body.dark .speakericon {
   gap: 0.75rem;
   flex-wrap: wrap;
 }
-.modal-wrapper {
-  display: none;
+
+#mobileMenu {
   position: fixed;
-  inset: 0;
-  background: rgba(27, 27, 27, 0.5);
-  justify-content: center;
+  top: 0;
+  left: -100%;
+  width: 70%;
+  height: 100%;
+  background: rgb(250, 213, 140, 0.5);
+  backdrop-filter: blur(3px);
+  color: inherit;
+  padding: 1rem;
+  z-index: 11;
+  flex-direction: column;
   align-items: center;
-  z-index: 20;
+  gap: 0.75rem;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+  transition: left 0.3s ease-in-out;
+  overflow-y: auto;
 }
-.modal-wrapper.active {
-  display: flex !important;
+
+body.dark #mobileMenu {
+  background: rgba(31, 41, 55, 0.8);
 }
-.modal-wrapper .box {
-  background: white;
-  padding: 2rem;
-  border-radius: 1rem;
-  max-width: 400px;
+
+#mobileMenu.active {
+  left: 0;
+}
+
+#mobileMenu header {
   width: 100%;
+  padding: 1rem 0;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 1rem;
 }
-body.dark .modal-wrapper .box {
-  background: #374151;
+
+#mobileMenu button,
+#mobileMenu select {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  text-align: center;
+  transition: background 0.3s ease;
+  margin-bottom: 10px;
+}
+
+#mobileMenu button {
+  background: #e5e7eb;
+  color: inherit;
+}
+
+#mobileMenu button:hover {
+  background: #d1d5db;
+}
+
+body.dark #mobileMenu button {
+  background: #4b5563;
   color: white;
 }
-#selectSurahModal {
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s, opacity 0.3s ease-in-out;
+
+body.dark #mobileMenu button:hover {
+  background: #6b7280;
 }
-#selectSurahModal.active {
-  visibility: visible;
-  opacity: 1;
+
+#mobileMenu #openSurahSelectModalBtnMobile,
+#mobileMenu #newSurahBtnMobile {
+  background: #059669;
+  color: white;
+}
+
+#mobileMenu #openSurahSelectModalBtnMobile:hover,
+#mobileMenu #newSurahBtnMobile:hover {
+  background: #047857;
+}
+
+#menuToggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+#menuToggle img {
+  width: 30px;
+  height: 30px;
+  filter: invert(0);
+  transition: filter 0.3s ease;
+}
+
+body.dark #menuToggle img {
+  filter: invert(1);
+}
+
+#menuOverlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+#menuOverlay.active {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .left-nav {
+    display: none;
+  }
+
+  #menuToggle {
+    display: block;
+  }
+}
+
+.container {
+  padding-top: calc(6rem + 56px);
+}
+
+#surahSelect {
+  max-height: 200px;
+  overflow-y: scroll;
+  text-align: center;
+  z-index: 21;
+}
+
+#mobileMenu header img {
+  width: 30px;
+  height: 30px;
+  filter: invert(0);
+  transition: filter 0.3s ease;
+}
+
+body.dark #mobileMenu header img {
+  filter: invert(1);
 }
