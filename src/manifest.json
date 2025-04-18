@@ -1,7 +1,7 @@
 {
   "name": "Sesleniş",
   "short_name": "Sesleniş",
-  "start_url": "/",
+  "start_url": "/seslenis/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#1e293b",
