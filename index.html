@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<link rel="manifest" href="src/manifest.json" />
-	<meta name="theme-color" content="#1e293b" />
+    <link rel="manifest" href="src/manifest.json" />
+    <meta name="theme-color" content="#1e293b" />
 
     <meta
       name="description"
@@ -351,9 +351,9 @@
       }
 
       #selectSurahBtn {
-        display: block; /* Make it a block element */
-        margin: 0 auto; /* Center horizontally */
-        text-align: center; /* Center text inside the button */
+        display: block;
+        margin: 0 auto;
+        text-align: center;
       }
     </style>
   </head>
@@ -368,7 +368,9 @@
             alt="Tema"
           />
         </button>
-        <button class="btn" id="languageToggle" style="display:none">TR</button>
+        <button class="btn" id="languageToggle" style="display: none">
+          TR
+        </button>
         <button class="btngreen" id="openSurahSelectModalBtn">Sûre Seç</button>
         <button class="btngreen" id="newSurahBtn">Rastgele Sûre</button>
         <button class="btn" id="startOverBtn">Baştan Başla</button>
@@ -392,7 +394,9 @@
           alt="Tema"
         />
       </button>
-      <button class="btn" id="languageToggleMobile" style="display:none">TR</button>
+      <button class="btn" id="languageToggleMobile" style="display: none">
+        TR
+      </button>
       <button
         class="btngreen"
         id="openSurahSelectModalBtnMobile"
@@ -400,18 +404,10 @@
       >
         Sûre Seç
       </button>
-      <button
-        class="btngreen"
-        id="newSurahBtnMobile"
-        onclick="startNewSurah()"
-      >
+      <button class="btngreen" id="newSurahBtnMobile" onclick="startNewSurah()">
         Rastgele Sûre
       </button>
-      <button
-        class="btn"
-        id="startOverBtnMobile"
-        onclick="startSurahOver()"
-      >
+      <button class="btn" id="startOverBtnMobile" onclick="startSurahOver()">
         Baştan Başla
       </button>
     </div>
@@ -498,7 +494,7 @@
 
       const langMap = {
         TR: "tr.diyanet",
-        EN: "tr.diyanet", //Fallback to turkish as english is removed
+        EN: "tr.diyanet", //English removed
       };
 
       let currentAudio = null;
@@ -534,8 +530,8 @@
       };
 
       function toggleLanguage() {
-        state.language = "TR"; //Prevent from changing from TR
-        saveLanguage(); // Save language immediately
+        state.language = "TR";
+        saveLanguage();
         applyLocalization();
         playAyah();
       }
@@ -545,7 +541,7 @@
       }
 
       function loadLanguage() {
-        state.language = "TR"; //Force default turkish
+        state.language = "TR";
         localStorage.setItem("language", state.language);
       }
 
@@ -565,10 +561,9 @@
             `https://api.alquran.cloud/v1/ayah/${state.surah}:${state.ayah}/ar.alafasy`
           );
           if (!arabicRes.ok) {
-            // If API returns error, fallback to 1:1
             state.surah = 1;
             state.ayah = 1;
-            return playAyah(); // Recall playAyah to load 1:1
+            return playAyah();
           }
           const arabic = await arabicRes.json();
 
@@ -581,10 +576,9 @@
             `https://api.alquran.cloud/v1/ayah/${state.surah}:${state.ayah}/${translationLang}`
           );
           if (!turkishRes.ok) {
-            // If API returns error, fallback to 1:1
             state.surah = 1;
             state.ayah = 1;
-            return playAyah(); // Recall playAyah to load 1:1
+            return playAyah();
           }
           const turkish = await turkishRes.json();
 
@@ -624,10 +618,9 @@
           currentAudio.play();
         } catch (e) {
           console.error(e);
-          // Removed alert; now it defaults to 1:1 silently.
           state.surah = 1;
           state.ayah = 1;
-          playAyah(); // Recall playAyah to load 1:1
+          playAyah();
         }
       };
 
@@ -715,7 +708,7 @@
 
       const showModal = (modalId) => {
         if (activeModal) {
-          hideModal(activeModal); // Hide previously active modal
+          hideModal(activeModal);
         }
         document.getElementById(modalId).classList.add("active");
         activeModal = modalId;
@@ -742,8 +735,7 @@
         surahCompletedModalTitle.textContent =
           "Sûre bitti, Ne yapmak istersiniz?";
         document.getElementById("newSurahModalBtn").textContent = "Yeni Sûre";
-        document.getElementById("restartSurahBtn").textContent =
-          "Baştan Başla";
+        document.getElementById("restartSurahBtn").textContent = "Baştan Başla";
 
         selectSurahModalTitle.textContent = "Sûre Seç";
         selectSurahOption.textContent = "Sûre Seçiniz";
@@ -760,19 +752,20 @@
           "Baştan Başla";
       };
 
-      window.onload = () => {
+      window.onload = async () => {
         applyTheme();
         state.ttsEnabled = localStorage.getItem("ttsEnabled") === "true";
         state.voiceURI = localStorage.getItem("voiceURI") || "";
         const savedState = localStorage.getItem("quranPlayerState");
 
-        loadLanguage(); // Load the language setting
+        loadLanguage();
 
         if (savedState) {
           state = JSON.parse(savedState);
           showModal("continueModal");
         } else {
           startNew();
+          await playAyah();
         }
         applyLocalization();
       };
@@ -802,7 +795,6 @@
         closeMobileMenu();
       });
 
-      // Mobile Menu Functions
       function showSelectSurahModal() {
         showModal("selectSurahModal");
         closeMobileMenu();
