@@ -1,8 +1,8 @@
 {
   "name": "Sesleniş",
   "short_name": "Sesleniş",
-  "start_url": "seslenis/",
-  "scope": "seslenis/",
+  "start_url": "https://xmeroriginals.github.io/seslenis/",
+  "scope": "https://xmeroriginals.github.io/seslenis/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#1e293b",
