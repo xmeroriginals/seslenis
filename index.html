@@ -453,6 +453,14 @@
       </div>
     </div>
 
+    <div id="welcomeModal" class="modal-wrapper">
+      <div class="box">
+        <h2>Sesleniş'e Hoş Geldin, Hazırsan ilk Sûre ile başlayalım.</h2>
+        <br /><br />
+        <button id="welcomebtn" class="btngreen">Başla</button>
+      </div>
+    </div>
+
     <script>
       let ayahNames = [];
       let state = {
@@ -475,7 +483,9 @@
       const themeIcon = document.getElementById("themeIcon");
       const surahSelect = document.getElementById("surahSelect");
       const selectSurahBtn = document.getElementById("selectSurahBtn");
+      const welcomebtn = document.getElementById("welcomebtn");
       const selectSurahModal = document.getElementById("selectSurahModal");
+      const welcomeModal = document.getElementById("welcomeModal");
       const openSurahSelectModalBtn = document.getElementById(
         "openSurahSelectModalBtn"
       );
@@ -695,6 +705,11 @@
         }
       };
 
+      welcomebtn.onclick = () => {
+        hideModal("welcomeModal");
+        startNew();
+      };
+
       document.getElementById("newSurahModalBtn").onclick = () => {
         hideModal("surahCompletedModal");
         startNew();
@@ -752,7 +767,7 @@
           "Baştan Başla";
       };
 
-      window.onload = async () => {
+      window.onload = () => {
         applyTheme();
         state.ttsEnabled = localStorage.getItem("ttsEnabled") === "true";
         state.voiceURI = localStorage.getItem("voiceURI") || "";
@@ -764,8 +779,7 @@
           state = JSON.parse(savedState);
           showModal("continueModal");
         } else {
-          startNew();
-          await playAyah();
+          showModal("welcomeModal");
         }
         applyLocalization();
       };
