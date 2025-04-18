@@ -25,6 +25,11 @@
       content="https://xmeroriginals.github.io/seslenis/assets/SeslenisSquareLogo.png"
     />
     <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://xmeroriginals.github.io/seslenis/"
+    />
+    <meta property="og:site_name" content="Sesleniş" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Sesleniş - Kuran Oynatıcı" />
     <meta
@@ -45,6 +50,20 @@
       href="https://xmeroriginals.github.io/seslenis/assets/SeslenisSquareLogo.png"
     />
     <title>Sesleniş</title>
+    
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Sesleniş",
+        "url": "https://xmeroriginals.github.io/seslenis/",
+        "applicationCategory": "Religion",
+        "description": "Rastgele seçilen Kur'an sureleri ile yeniden bağlantı kurmanıza, düşünmenize ve huzur bulmanıza yardımcı olur.",
+        "operatingSystem": "All",
+        "inLanguage": "tr"
+      }
+    </script>
+
     <style>
       body {
         margin: 0;
@@ -510,7 +529,7 @@
 
       const langMap = {
         TR: "tr.diyanet",
-        EN: "tr.diyanet", //English removed
+        EN: "tr.diyanet", //en.asad | English removed
       };
 
       let currentAudio = null;
@@ -670,9 +689,16 @@
       const applyTheme = () => {
         const isDark = localStorage.getItem("darkMode") === "true";
         document.body.className = isDark ? "dark" : "light";
-        themeIcon.src = isDark
+
+        const themeSrc = isDark
           ? "https://xmeroriginals.github.io/seslenis/assets/Light.svg"
           : "https://xmeroriginals.github.io/seslenis/assets/Dark.svg";
+
+        const themeIcon = document.getElementById("themeIcon");
+        const themeIconMobile = document.getElementById("themeIconMobile");
+
+        if (themeIcon) themeIcon.src = themeSrc;
+        if (themeIconMobile) themeIconMobile.src = themeSrc;
       };
 
       themeToggle.onclick = () => {
